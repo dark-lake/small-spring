@@ -9,6 +9,7 @@ public class UserService implements IUserService {
 
     public String queryUserInfo() {
         try {
+            // 生成一个0-99之间的随机值
             Thread.sleep(new Random(1).nextInt(100));
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -18,6 +19,7 @@ public class UserService implements IUserService {
 
     public String register(String userName) {
         try {
+            // 生成一个0-99之间的随机值
             Thread.sleep(new Random(1).nextInt(100));
         } catch (InterruptedException e) {
             e.printStackTrace();

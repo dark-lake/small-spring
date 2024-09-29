@@ -13,6 +13,9 @@ import cn.bugstack.springframework.aop.AdvisedSupport;
  *
  *
  * 作者：DerekYRC https://github.com/DerekYRC/mini-spring
+ *
+ * 通过传入的AdvisedSupport中的proxyTargetClass属性来判断其是否是代理类,如果是就使用cglib来创建
+ * aop代理对象,否则使用jdk动态代理创建代理对象
  */
 public class ProxyFactory {
 

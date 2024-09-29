@@ -24,8 +24,11 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 
     @Override
     protected void refreshBeanFactory() throws BeansException {
+        // 创建一个beanFactory
         DefaultListableBeanFactory beanFactory = createBeanFactory();
+        // 记在BeanDefinitions
         loadBeanDefinitions(beanFactory);
+        // 赋值
         this.beanFactory = beanFactory;
     }
 

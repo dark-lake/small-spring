@@ -48,15 +48,18 @@ public class PropertyPlaceholderConfigurer implements BeanFactoryPostProcessor {
             // 占位符替换属性值
             Properties properties = new Properties();
             properties.load(resource.getInputStream());
-
+            // 开始遍历beanDefinition,对其中的propertyValue进行修改
             String[] beanDefinitionNames = beanFactory.getBeanDefinitionNames();
+            // 这个for就是将所有的@Value("${token}")的都完成对应的propertyValue的覆盖
             for (String beanName : beanDefinitionNames) {
                 BeanDefinition beanDefinition = beanFactory.getBeanDefinition(beanName);
 
                 PropertyValues propertyValues = beanDefinition.getPropertyValues();
                 for (PropertyValue propertyValue : propertyValues.getPropertyValues()) {
                     Object value = propertyValue.getValue();
+                    // 如果不是字符串类型那就跳过
                     if (!(value instanceof String)) continue;
+                    // 否则就是字符串格式,那就可以修改其propertyValues
                     value = resolvePlaceholder((String) value, properties);
                     propertyValues.addPropertyValue(new PropertyValue(propertyValue.getName(), value));
                 }
@@ -96,6 +99,11 @@ public class PropertyPlaceholderConfigurer implements BeanFactoryPostProcessor {
             this.properties = properties;
         }
 
+        /**
+         * 该方法就是用来返回指定字符串变量所对应的实际值
+         * @param strVal
+         * @return
+         */
         @Override
         public String resolveStringValue(String strVal) {
             return PropertyPlaceholderConfigurer.this.resolvePlaceholder(strVal, properties);

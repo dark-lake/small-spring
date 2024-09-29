@@ -14,11 +14,12 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
     @Override
     public Object getBean(String name) throws BeansException {
+        // 这里的逻辑是，如果当前的bean是一个单例bean，那就返回其实例对象
         Object bean = getSingleton(name);
         if (bean != null) {
             return bean;
         }
-
+        // 如果不是单例,那就去容器中获取其BeanDefinition,然后通过其子类实现create一个实例
         BeanDefinition beanDefinition = getBeanDefinition(name);
         return createBean(name, beanDefinition);
     }

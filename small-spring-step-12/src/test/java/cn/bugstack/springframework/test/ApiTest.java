@@ -52,10 +52,13 @@ public class ApiTest {
 
     @Test
     public void test_beforeAdvice() {
+        // 实例化自定义的MethodBeforeAdvice
         UserServiceBeforeAdvice beforeAdvice = new UserServiceBeforeAdvice();
+        // 实例化对应的拦截器
         MethodBeforeAdviceInterceptor interceptor = new MethodBeforeAdviceInterceptor(beforeAdvice);
+        // 相当于目前的方法拦截器是一个带有前置通知的拦截器
         advisedSupport.setMethodInterceptor(interceptor);
-
+        // 通过代理工厂实例化一个IUserService的代理对象
         IUserService proxy = (IUserService) new ProxyFactory(advisedSupport).getProxy();
         System.out.println("测试结果：" + proxy.queryUserInfo());
     }
@@ -64,19 +67,25 @@ public class ApiTest {
     public void test_advisor() {
         // 目标对象
         IUserService userService = new UserService();
-
+        // 切点通知
         AspectJExpressionPointcutAdvisor advisor = new AspectJExpressionPointcutAdvisor();
+        // 设置拦截规则
         advisor.setExpression("execution(* cn.bugstack.springframework.test.bean.IUserService.*(..))");
+        // 设置拦截器
         advisor.setAdvice(new MethodBeforeAdviceInterceptor(new UserServiceBeforeAdvice()));
-
+        // 此时这里拿到的其实就是pointcut对象,该方法直接返回的就是this
         ClassFilter classFilter = advisor.getPointcut().getClassFilter();
+        // 这一步用于判断是否可以拦截userService
         if (classFilter.matches(userService.getClass())) {
             AdvisedSupport advisedSupport = new AdvisedSupport();
 
             TargetSource targetSource = new TargetSource(userService);
             advisedSupport.setTargetSource(targetSource);
+            // 这里设置的Advise类是带有bofore的
             advisedSupport.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());
+            // 设置方法匹配器
             advisedSupport.setMethodMatcher(advisor.getPointcut().getMethodMatcher());
+            // true为cglibAopProxy
             advisedSupport.setProxyTargetClass(true); // false/true，JDK动态代理、CGlib动态代理
 
             IUserService proxy = (IUserService) new ProxyFactory(advisedSupport).getProxy();

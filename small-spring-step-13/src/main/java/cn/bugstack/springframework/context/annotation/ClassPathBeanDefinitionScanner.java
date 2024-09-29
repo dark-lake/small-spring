@@ -21,6 +21,7 @@ import java.util.Set;
  */
 public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateComponentProvider {
 
+    // BeanFactory对象
     private BeanDefinitionRegistry registry;
 
     public ClassPathBeanDefinitionScanner(BeanDefinitionRegistry registry) {
@@ -29,6 +30,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 
     public void doScan(String... basePackages) {
         for (String basePackage : basePackages) {
+            // 所有候选BeanDefinition
             Set<BeanDefinition> candidates = findCandidateComponents(basePackage);
             for (BeanDefinition beanDefinition : candidates) {
                 // 解析 Bean 的作用域 singleton、prototype
@@ -36,11 +38,13 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
                 if (StrUtil.isNotEmpty(beanScope)) {
                     beanDefinition.setScope(beanScope);
                 }
+                // 然后这个将这个beanDefinition注册到BeanFactory中
                 registry.registerBeanDefinition(determineBeanName(beanDefinition), beanDefinition);
             }
         }
     }
 
+    // 用于获取BeanDefinition的scope的值
     private String resolveBeanScope(BeanDefinition beanDefinition) {
         Class<?> beanClass = beanDefinition.getBeanClass();
         Scope scope = beanClass.getAnnotation(Scope.class);
@@ -48,6 +52,11 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
         return StrUtil.EMPTY;
     }
 
+    /**
+     * 用于获取BeanDefinition中的beanName,如果没有指定就是小驼峰
+     * @param beanDefinition
+     * @return
+     */
     private String determineBeanName(BeanDefinition beanDefinition) {
         Class<?> beanClass = beanDefinition.getBeanClass();
         Component component = beanClass.getAnnotation(Component.class);

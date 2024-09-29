@@ -33,7 +33,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
     @Override
     protected Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException {
-        // 判断是否返回代理 Bean 对象
+        // 判断是否返回代理 Bean 对象, 如果是那此时这个bean就是一个代理对象,否则就是null
         Object bean = resolveBeforeInstantiation(beanName, beanDefinition);
         if (null != bean) {
             return bean;
@@ -48,9 +48,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             // 实例化 Bean
             bean = createBeanInstance(beanDefinition, beanName, args);
 
-            // 处理循环依赖，将实例化后的Bean对象提前放入缓存中暴露出来
+            // 处理循环依赖，将实例化后的Bean对象提前放入缓存中暴露出来, 只要它是单例的那就往三级缓存中放一个它的工厂对象,作为提前暴露
             if (beanDefinition.isSingleton()) {
-                Object finalBean = bean;
+                Object finalBean = bean; // 这里需要传入一个工厂对象
                 addSingletonFactory(beanName, () -> getEarlyBeanReference(beanName, beanDefinition, finalBean));
             }
 
@@ -83,6 +83,17 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
     }
 
+    /**
+     * 获取半成bean的引用
+     * 获取所有的BeanPostProcesser,然后如果是InstantiationAwareBeanPostProcessor的实例
+     * 那就执行getEarlyBeanReference继续递归
+     *
+     * 要不就是返回bean本身,要不就是返回其
+     * @param beanName
+     * @param beanDefinition
+     * @param bean
+     * @return
+     */
     protected Object getEarlyBeanReference(String beanName, BeanDefinition beanDefinition, Object bean) {
         Object exposedObject = bean;
         for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {

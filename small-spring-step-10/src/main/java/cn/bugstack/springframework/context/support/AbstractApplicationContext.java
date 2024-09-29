@@ -24,11 +24,11 @@ import java.util.Map;
  * <p>
  * 抽象应用上下文
  * <p>
- *
- *
- *
- *
- *
+ * <p>
+ * <p>
+ * <p>
+ * <p>
+ * <p>
  * 作者：DerekYRC https://github.com/DerekYRC/mini-spring
  */
 public abstract class AbstractApplicationContext extends DefaultResourceLoader implements ConfigurableApplicationContext {
@@ -85,6 +85,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         }
     }
 
+    // 通过将beanFactory交给SimpleApplicationEventMulticaster,然后将该对象加入到单例容器中
     private void initApplicationEventMulticaster() {
         ConfigurableListableBeanFactory beanFactory = getBeanFactory();
         applicationEventMulticaster = new SimpleApplicationEventMulticaster(beanFactory);

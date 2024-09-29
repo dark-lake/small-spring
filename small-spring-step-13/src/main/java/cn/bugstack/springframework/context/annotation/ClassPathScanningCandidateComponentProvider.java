@@ -22,6 +22,7 @@ public class ClassPathScanningCandidateComponentProvider {
 
     public Set<BeanDefinition> findCandidateComponents(String basePackage) {
         Set<BeanDefinition> candidates = new LinkedHashSet<>();
+        // classUtil是hutool的一个工具类, 扫描包通过注解的方式
         Set<Class<?>> classes = ClassUtil.scanPackageByAnnotation(basePackage, Component.class);
         for (Class<?> clazz : classes) {
             candidates.add(new BeanDefinition(clazz));

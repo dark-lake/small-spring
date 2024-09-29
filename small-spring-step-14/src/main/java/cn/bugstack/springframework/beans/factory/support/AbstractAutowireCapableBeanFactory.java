@@ -71,6 +71,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {
             if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor){
                 PropertyValues pvs = ((InstantiationAwareBeanPostProcessor) beanPostProcessor).postProcessPropertyValues(beanDefinition.getPropertyValues(), bean, beanName);
+                // 这里没明白, beanPostProcessor不是已经将对应的value注解和autowired的属性赋值了,这里为什么还要加一遍?
+                // 知道了,因为通过包扫描的beanDefinition中的propertyValues是空的,所以不影响,而且它返回的这个pvs就是传入的pvs,但是没有做任何额外的操作
+                // 所以如果xml也配置了,那就会出现旧的值把新的值覆盖的情况,因为属性赋值是后与当前执行的
                 if (null != pvs) {
                     for (PropertyValue propertyValue : pvs.getPropertyValues()) {
                         beanDefinition.getPropertyValues().addPropertyValue(propertyValue);

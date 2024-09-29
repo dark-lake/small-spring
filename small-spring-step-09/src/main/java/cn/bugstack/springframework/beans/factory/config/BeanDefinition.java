@@ -19,6 +19,7 @@ public class BeanDefinition {
 
     private String destroyMethodName;
 
+    // 默认每个beanDefinition都是单例模式
     private String scope = SCOPE_SINGLETON;
 
     private boolean singleton = true;

@@ -48,7 +48,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
     public <T> T getBean(String name, Class<T> requiredType) throws BeansException {
         return (T) getBean(name);
     }
-
+    // 先通过三级缓存去获取一下是否存在对应的bean对象,如果存在就直接调用getObjectForBeanInstance来返回,否则就执行创建
     protected <T> T doGetBean(final String name, final Object[] args) {
         Object sharedInstance = getSingleton(name);
         if (sharedInstance != null) {

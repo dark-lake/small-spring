@@ -13,6 +13,7 @@ package cn.bugstack.springframework.aop;
  *
  *
  * 作者：DerekYRC https://github.com/DerekYRC/mini-spring
+ * 这个类很简单,就是用于包装目标类,提供get方法,并且额外增加了一个获取目标类接口的class[]
  */
 public class TargetSource {
 

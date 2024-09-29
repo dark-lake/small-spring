@@ -5,7 +5,7 @@ package cn.bugstack.springframework.beans.factory.config;
  */
 @SuppressWarnings({"rawtypes"})
 public class BeanDefinition {
-
+    // 将这里改为class
     private Class beanClass;
 
     public BeanDefinition(Class beanClass) {

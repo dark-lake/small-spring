@@ -17,6 +17,7 @@ import cn.bugstack.springframework.core.io.ResourceLoader;
  */
 public abstract class AbstractBeanDefinitionReader implements BeanDefinitionReader {
 
+    // 这个实际上就是一个beanFactory
     private final BeanDefinitionRegistry registry;
 
     private ResourceLoader resourceLoader;

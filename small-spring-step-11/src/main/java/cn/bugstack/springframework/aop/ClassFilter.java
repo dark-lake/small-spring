@@ -17,6 +17,8 @@ public interface ClassFilter {
      * Should the pointcut apply to the given interface or target class?
      * @param clazz the candidate target class
      * @return whether the advice should apply to the given target class
+     *
+     * 用于判断当前给定class是否应用到对应的class/接口上
      */
     boolean matches(Class<?> clazz);
 

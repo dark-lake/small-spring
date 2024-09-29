@@ -13,6 +13,7 @@ package cn.bugstack.springframework.beans.factory;
  *
  *
  * 作者：DerekYRC https://github.com/DerekYRC/mini-spring
+ * 你可以理解为它是一个工厂bean,用于生成T的实例对象
  */
 public interface FactoryBean<T> {
 

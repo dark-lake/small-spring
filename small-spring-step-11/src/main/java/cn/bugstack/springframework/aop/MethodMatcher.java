@@ -17,6 +17,7 @@ public interface MethodMatcher {
     /**
      * Perform static checking whether the given method matches. If this
      * @return whether or not this method matches statically
+     * 判断当前的切点是否应用到当前的targetClass的方法上
      */
     boolean matches(Method method, Class<?> targetClass);
     

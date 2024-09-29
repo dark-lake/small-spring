@@ -56,14 +56,14 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-
+        // 如果是基础设施类,那就直接返回
         if (isInfrastructureClass(bean.getClass())) return bean;
-
+        // 获取处理切面的类
         Collection<AspectJExpressionPointcutAdvisor> advisors = beanFactory.getBeansOfType(AspectJExpressionPointcutAdvisor.class).values();
-
+        // 遍历每个处理切面的类
         for (AspectJExpressionPointcutAdvisor advisor : advisors) {
             ClassFilter classFilter = advisor.getPointcut().getClassFilter();
-            // 过滤匹配类
+            // 通过其内部的classFilter来过滤掉不满足匹配条件的类
             if (!classFilter.matches(bean.getClass())) continue;
 
             AdvisedSupport advisedSupport = new AdvisedSupport();

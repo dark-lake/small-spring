@@ -94,6 +94,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
     @Override
     public String resolveEmbeddedValue(String value) {
         String result = value;
+        // 每个value都对应着可能不同的PropertyPlaceholderConfigurer
+        // 所有其对应的StringValueResolver自然所在的父类也可能不同
         for (StringValueResolver resolver : this.embeddedValueResolvers) {
             result = resolver.resolveStringValue(result);
         }

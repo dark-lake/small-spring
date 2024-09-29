@@ -10,9 +10,10 @@ import cn.bugstack.springframework.beans.factory.HierarchicalBeanFactory;
  */
 public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, SingletonBeanRegistry {
 
-    String SCOPE_SINGLETON = "singleton";
-
-    String SCOPE_PROTOTYPE = "prototype";
+    // 单例
+    public static final String SCOPE_SINGLETON = "singleton";
+    // 原型
+    public static final String SCOPE_PROTOTYPE = "prototype";
 
     void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
 

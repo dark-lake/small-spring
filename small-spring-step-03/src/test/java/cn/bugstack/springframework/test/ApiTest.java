@@ -45,8 +45,8 @@ public class ApiTest {
     }
 
     @Test
-    public void test_newInstance() throws IllegalAccessException, InstantiationException {
-        UserService userService = UserService.class.newInstance();
+    public void test_newInstance() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        UserService userService = UserService.class.getDeclaredConstructor().newInstance();
         System.out.println(userService);
     }
 

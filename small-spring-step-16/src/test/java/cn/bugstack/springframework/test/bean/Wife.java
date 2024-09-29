@@ -6,7 +6,10 @@ public class Wife {
     private IMother mother; // 婆婆
 
     public String queryHusband() {
-        return "Wife.husband、Mother.callMother：" + mother.callMother();
+        String result = "Wife.husband、Mother.callMother：";
+        String test1 = mother.callMother();
+//        return "Wife.husband、Mother.callMother：" + mother.callMother();
+        return result + test1;
     }
 
     public Husband getHusband() {

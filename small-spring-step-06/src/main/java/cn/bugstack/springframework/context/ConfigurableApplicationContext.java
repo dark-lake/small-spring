@@ -7,20 +7,11 @@ import cn.bugstack.springframework.beans.BeansException;
  * Provides facilities to configure an application context in addition
  * to the application context client methods in the
  * {@link cn.bugstack.springframework.context.ApplicationContext} interface.
- *
- *
- *
- *
- *
- *
- * 作者：DerekYRC https://github.com/DerekYRC/mini-spring
  */
 public interface ConfigurableApplicationContext extends ApplicationContext {
 
     /**
      * 刷新容器
-     *
-     * @throws BeansException
      */
     void refresh() throws BeansException;
 

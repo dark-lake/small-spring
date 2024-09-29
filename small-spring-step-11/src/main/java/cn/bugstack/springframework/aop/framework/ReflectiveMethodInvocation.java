@@ -42,6 +42,7 @@ public class ReflectiveMethodInvocation implements MethodInvocation {
         return arguments;
     }
 
+    // 直接通过反射的方式执行该对象的该方法
     @Override
     public Object proceed() throws Throwable {
         return method.invoke(target, arguments);

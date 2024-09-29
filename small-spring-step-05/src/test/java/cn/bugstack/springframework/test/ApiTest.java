@@ -91,7 +91,7 @@ public class ApiTest {
 
     @Test
     public void test_xml() {
-        // 1.初始化 BeanFactory
+        // 1.初始化 BeanFactory, 这个beanFactory就是一个BeanRegistry
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 2. 读取配置文件&注册Bean

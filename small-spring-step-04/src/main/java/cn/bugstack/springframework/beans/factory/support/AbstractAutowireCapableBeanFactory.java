@@ -52,18 +52,20 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
      */
     protected void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
         try {
+            // 从beanDefinition中获取需要填充的属性对象
             PropertyValues propertyValues = beanDefinition.getPropertyValues();
             for (PropertyValue propertyValue : propertyValues.getPropertyValues()) {
-
+                // 获取属性名
                 String name = propertyValue.getName();
+                // 获取属性值
                 Object value = propertyValue.getValue();
-
+                // 如果值是BeanReference的子类
                 if (value instanceof BeanReference) {
                     // A 依赖 B，获取 B 的实例化
                     BeanReference beanReference = (BeanReference) value;
                     value = getBean(beanReference.getBeanName());
                 }
-                // 属性填充
+                // 属性填充, BeanUtil是java8中的内容
                 BeanUtil.setFieldValue(bean, name, value);
             }
         } catch (Exception e) {

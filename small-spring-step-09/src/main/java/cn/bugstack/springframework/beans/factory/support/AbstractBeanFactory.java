@@ -44,6 +44,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
     }
 
     protected <T> T doGetBean(final String name, final Object[] args) {
+        // 这个东西有可能是一个FactoryBean
         Object sharedInstance = getSingleton(name);
         if (sharedInstance != null) {
             // 如果是 FactoryBean，则需要调用 FactoryBean#getObject
@@ -56,14 +57,17 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
     }
 
     private Object getObjectForBeanInstance(Object beanInstance, String beanName) {
+        // 如果不是FactoryBean那就直接返回
         if (!(beanInstance instanceof FactoryBean)) {
             return beanInstance;
         }
-
+        // 否则就先从FactoryBean的缓存获取一下对应的beanName
         Object object = getCachedObjectForFactoryBean(beanName);
-
+        // 如果之前缓存中没有该FactoryBean对象
         if (object == null) {
+            // 将当前对象转为FactoryBean对象
             FactoryBean<?> factoryBean = (FactoryBean<?>) beanInstance;
+            // 然后从FactoryBean中获取一个实例
             object = getObjectFromFactoryBean(factoryBean, beanName);
         }
 

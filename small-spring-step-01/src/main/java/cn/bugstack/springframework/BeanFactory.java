@@ -14,6 +14,7 @@ public class BeanFactory {
         return beanDefinitionMap.get(name).getBean();
     }
 
+    // 这里类似于包扫描之后存到容器中
     public void registerBeanDefinition(String name, BeanDefinition beanDefinition) {
         beanDefinitionMap.put(name, beanDefinition);
     }

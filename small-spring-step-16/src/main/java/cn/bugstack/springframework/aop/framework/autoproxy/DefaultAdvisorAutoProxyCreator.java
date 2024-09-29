@@ -67,7 +67,7 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
 
         return bean;
     }
-
+    // 如果是 adivser/pointcut/advice那就是基础对象, 直接返回
     protected Object wrapIfNecessary(Object bean, String beanName) {
         if (isInfrastructureClass(bean.getClass())) return bean;
 
@@ -92,7 +92,8 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
 
         return bean;
     }
-
+    // 加入到earlyProxyReferences,并且返回其proxy对象, 可以把DefaultAdvisorAutoProxyCreator当做一个创建执行beanName的工厂,返回的是
+    // 如果其满足切面规则,那返回的就是增强后的bean,否则就是返回其CGlib的实例bean对象
     @Override
     public Object getEarlyBeanReference(Object bean, String beanName) {
         earlyProxyReferences.add(beanName);

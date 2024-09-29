@@ -86,6 +86,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             scanPackage(scanPath);
         }
 
+        // 这里往后就是处理通过xml中配置的bean,如果没有就不处理了
         List<Element> beanList = root.elements("bean");
         for (Element bean : beanList) {
 
@@ -134,6 +135,10 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         }
     }
 
+    /**
+     * 集成上下文中的注解解析部分,可以方便的完成包扫描,并将基本的BeanDefinition添加到BeanFactory中
+     * @param scanPath
+     */
     private void scanPackage(String scanPath) {
         String[] basePackages = StrUtil.splitToArray(scanPath, ',');
         ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(getRegistry());
